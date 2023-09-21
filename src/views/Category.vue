@@ -1,7 +1,7 @@
 <template>
     <Main>
         <div class="fixed scroll shadow-sm sm:w-96 w-full px-5 py-3 bg-white">
-            <span @click="getProducts(item.id)" class="relative category-nav-item px-5 py-3 cursor-pointer" v-for="(item, index) in categories" :key="index">
+            <span @click="getProducts(item.id)" class="relative px-5 py-3 cursor-pointer" v-for="(item, index) in categories" :key="index">
                 {{ item.name }}
                 <span v-show="item.id == cateId" :class="{active: item.id == cateId}"></span>
             </span>
@@ -41,7 +41,7 @@ export default {
     methods: {
         async getProducts(id) {
             this.cateId = id ?? ''
-            await axios.get(import.meta.env.VITE_API_URL+'/user/product-list', {
+            await axios.get(`${import.meta.env.VITE_API_URL}/user/product-list`, {
                 params: {
                     offset: import.meta.env.VITE_LIST_OFFSET,
                     category_id: id ?? '',

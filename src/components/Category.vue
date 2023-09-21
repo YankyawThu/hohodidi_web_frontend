@@ -1,6 +1,6 @@
 <template>
     <router-link :to="'/category/'+id">
-        <img :src="url+image" width=50 height=50 class='rounded h-10 m-auto' />
+        <img :src="url+'/'+image" width=50 height=50 class='rounded h-10 m-auto' />
         <div class='text-center pt-1'>{{ name }}</div>
     </router-link>
 </template>

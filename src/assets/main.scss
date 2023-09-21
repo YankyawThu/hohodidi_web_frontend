@@ -1,3 +1,7 @@
+$color: #ff6e66;
+$color1: #f7c9c7;
+$color2: #f3fefe;
+
 body {
     font-size: 0.78rem;
     box-sizing: border-box;
@@ -7,7 +11,7 @@ body {
 }
 
 .nav {
-    background: #ff6e66;
+    background: $color;
     color: #ffff;
     .label {
         font-size: 14px;
@@ -18,11 +22,11 @@ body {
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    color: #f7c9c7;
+    color: $color1;
 }
 
 .router-link-active {
-    color: #ff6e66;
+    color: $color;
 }
 
 .item {
@@ -32,19 +36,21 @@ body {
         width: 180px;
         height: 120px;
     }
-    .discount-percent {
-        color: #ff6e66;
-        font-size: 10px;
-    }
-    .special-price {
-        font-size: 12px;
-    }
     .icon {
-        background: #f7c9c7;
-        color: #ff6e66;
+        background: $color1;
+        color: $color;
         border-top-left-radius: 5px;
         border-bottom-right-radius: 5px;
     }
+}
+
+.discount-percent {
+    color: $color;
+    font-size: 10px;
+}
+
+.special-price {
+    font-size: 12px;
 }
 
 .scroll {
@@ -71,3 +77,44 @@ body {
 .category-box {
     width: 90px;
 }
+
+.tab {
+    cursor: pointer;
+    .active {
+        width: 30px;
+        height: 3px;
+        background: rgb(255, 110, 102);
+        position: absolute;
+        bottom: 0px;
+        margin: 0px auto;
+        left: 1px;
+        right: 1px;
+        border-radius: 10px;
+    }
+  }
+
+.tabsContainer {
+    overflow: hidden;
+    .tabsContent {
+      transition: 0.5s all;
+      display: flex;
+        .tabContent {
+            padding: 0.7rem;
+            min-width: 100%;
+            min-height: 100%;
+        }
+    }
+  }
+
+.desc-bg {
+    background: $color2;
+}
+
+.photo-bg {
+    background: $color2;
+}
+
+.shop-bg {
+    background: $color2;
+}
+

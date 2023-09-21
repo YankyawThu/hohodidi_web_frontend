@@ -1,7 +1,7 @@
 <template>
-    <router-link :to="'/item-detail/'+item.id">
+    <router-link :to="'/product-detail/'+item.id">
         <div class='item w-44 h-56 pt-2 rounded mb-3'>
-            <img :src="url+item.image" class='rounded px-2 product-img' />
+            <img :src="url+'/'+item.image" class='rounded px-2 product-img' />
             <div>
                 <div class='p-2 pb-0 truncate'>
                     {{ item.name }}

@@ -2,10 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Category from '../views/Category.vue'
 import NearBy from '../views/NearBy.vue'
-import ItemDetail from '../views/ItemDetail.vue'
+import ProductDetail from '../views/ProductDetail.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.APP_URL),
   routes: [
     {
       path: '/',
@@ -13,9 +13,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/item-detail/:id',
-      name: 'item-detail',
-      component: ItemDetail
+      path: '/product-detail/:id',
+      name: 'product-detail',
+      component: ProductDetail
     },
     {
       path: '/category',

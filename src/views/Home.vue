@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         async getCategories() {
-            await axios.get(import.meta.env.VITE_API_URL+'/user/category-list')
+            await axios.get(`${import.meta.env.VITE_API_URL}/user/category-list`)
             .then(response => {
                 this.$store.commit('category/setCategories', response.data.data)
             })
@@ -54,7 +54,7 @@ export default {
             })
         },
         async getHotdeals() {
-            await axios.get(import.meta.env.VITE_API_URL+'/user/hotdeals-list')
+            await axios.get(`${import.meta.env.VITE_API_URL}/user/hotdeals-list`)
             .then(response => {
                 this.hotDeals = response.data.data
             })
