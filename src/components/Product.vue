@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/product-detail/'+item.id">
+    <div @click="productDetail()">
         <div class='item w-44 h-56 pt-2 rounded mb-3'>
             <img :src="url+'/'+item.image" class='rounded px-2 product-img' />
             <div>
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-    </router-link>
+    </div>
 </template>
 
 <script>
@@ -32,6 +32,16 @@ export default {
     data() {
         return {
             url: import.meta.env.VITE_API_URL
+        }
+    },
+    methods: {
+        productDetail() {
+            this.$router.push({
+                name: 'product-detail',
+                query: {
+                    data: JSON.stringify(this.item)
+                }
+            })
         }
     }
 }

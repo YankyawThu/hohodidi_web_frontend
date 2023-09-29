@@ -18,6 +18,7 @@
                 </div>
             </div>
         </div>
+        <Modal v-show="showModal" @close="showModal=false" />
     </Main>
 </template>
 
@@ -25,17 +26,19 @@
 import Category from '../components/Category.vue'
 import Product from '../components/Product.vue'
 import Main from '../components/Main.vue'
-import axios from 'axios'
+import Modal from '../components/Modal.vue'
 
 export default {
     components: {
         Category,
         Product,
-        Main
+        Main,
+        Modal
     },
     data() {
         return {
-            hotDeals: []
+            hotDeals: [],
+            showModal: false
         }
     },
     computed: {
@@ -44,28 +47,19 @@ export default {
         }
     },
     methods: {
-        async getCategories() {
-            await axios.get(`${import.meta.env.VITE_API_URL}/user/category-list`)
+        fetchHotDeals() {
+            this.$store.dispatch('product/fetchHotDeals')
             .then(response => {
-                this.$store.commit('category/setCategories', response.data.data)
-            })
-            .catch(error => {
-                console.log(error)
+                this.hotDeals = response
             })
         },
-        async getHotdeals() {
-            await axios.get(`${import.meta.env.VITE_API_URL}/user/hotdeals-list`)
-            .then(response => {
-                this.hotDeals = response.data.data
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        fetchCategory() {
+            this.$store.dispatch('category/fetch')
         }
     },
     mounted() {
-        this.getCategories()
-        this.getHotdeals()
+        this.fetchHotDeals()
+        this.fetchCategory()
     }
 }
 </script>

@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Category from '../views/Category.vue'
 import NearBy from '../views/NearBy.vue'
 import ProductDetail from '../views/ProductDetail.vue'
+import Profile from '../views/Profile.vue'
+import Login from '../views/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.APP_URL),
@@ -10,12 +12,15 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
     },
     {
-      path: '/product-detail/:id',
+      path: '/product-detail',
       name: 'product-detail',
-      component: ProductDetail
+      component: ProductDetail,
+      props: route => ({
+        product: route.query.data
+      })
     },
     {
       path: '/category',
@@ -40,9 +45,32 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      // component: profile
+      component: Profile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
     },
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user && user.token) {
+      next()
+    }
+    else {
+      next('/login')
+    }
+  }
+  else {
+    next();
+  }
 })
 
 export default router

@@ -1,4 +1,4 @@
-<template #content>
+<template>
     near-by
     <div ref="map" class="sm:w-96 w-full h-screen"></div>
     Latitude: {{ lat }}

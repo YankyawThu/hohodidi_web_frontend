@@ -1,11 +1,15 @@
 
 import {createStore} from 'vuex'
-import hotDeal from './hotdeal'
 import category from './category'
+import auth from './auth'
+import user from './user'
+import product from './product'
 
 export default createStore ({
     modules: {
-        hotDeal: hotDeal,
         category: category,
+        auth: auth,
+        user: user,
+        product: product,
     }
 })

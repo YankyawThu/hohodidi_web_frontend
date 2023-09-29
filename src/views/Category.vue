@@ -39,25 +39,15 @@ export default {
         }
     },
     methods: {
-        async getProducts(id) {
-            this.cateId = id ?? ''
-            await axios.get(`${import.meta.env.VITE_API_URL}/user/product-list`, {
-                params: {
-                    offset: import.meta.env.VITE_LIST_OFFSET,
-                    category_id: id ?? '',
-                    name: ''
-                }
-            })
+        fetchProduct() {
+            this.$store.dispatch('product/fetchProduct', this.cateId)
             .then(response => {
-                this.products = response.data.data
-            })
-            .catch(error => {
-                console.log(error)
+                this.products = response
             })
         }
     },
     mounted() {
-        this.getProducts(this.cateId)
+        this.fetchProduct()
     }
 }
 </script>
