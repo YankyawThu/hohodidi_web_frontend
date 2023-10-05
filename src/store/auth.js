@@ -22,6 +22,7 @@ const auth = {
         logout({ commit }) {
             AuthService.logout()
             commit('setLogout')
+            // window.location = '/'
         }
     },
     mutations: {

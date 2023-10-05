@@ -100,18 +100,24 @@ export default {
     },
     methods: {
         logout() {
-            this.$store.dispatch('auth/logout').then(() => {
-                    this.$router.push({
-                        name: 'home'
-                    })
-                },
-                error => {
-                    console.log(error)
-                }
-            )
+            this.$store.dispatch('auth/logout')
+            .then(() => {
+                this.$store.commit('user/setCartCount', 0)
+                this.$store.commit('user/setUser', {})
+                this.$router.push({
+                    name: 'home'
+                })
+            },
+            error => {
+                console.log(error)
+            })
+        },
+        fetchUser() {
+            this.$store.dispatch('user/fetch')
         }
     },
     mounted() {
+        this.fetchUser()
     }
 }
 </script>

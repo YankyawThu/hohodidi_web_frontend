@@ -5,6 +5,7 @@ import NearBy from '../views/NearBy.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
+import Order from '../views/Order.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.APP_URL),
@@ -25,12 +26,10 @@ const router = createRouter({
     {
       path: '/category',
       name: 'category',
-      component: Category
-    },
-    {
-      path: '/category/:id',
-      name: 'categoryById',
-      component: Category
+      component: Category,
+      props: route => ({
+        id: route.query.id
+      })
     },
     {
       path: '/voucher',
@@ -54,6 +53,14 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Login,
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: Order,
+      meta: {
+        requiresAuth: true
+      }
     },
   ]
 })

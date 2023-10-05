@@ -1,7 +1,7 @@
 <template>
     <Main>
         <div class="fixed scroll shadow-sm sm:w-96 w-full px-5 py-3 bg-white">
-            <span @click="getProducts(item.id)" class="relative px-5 py-3 cursor-pointer" v-for="(item, index) in categories" :key="index">
+            <span @click="fetchProduct(item.id)" class="relative px-5 py-3 cursor-pointer" v-for="(item, index) in categories" :key="index">
                 {{ item.name }}
                 <span v-show="item.id == cateId" :class="{active: item.id == cateId}"></span>
             </span>
@@ -18,7 +18,6 @@
 
 <script>
 
-import axios from 'axios'
 import Product from '../components/Product.vue'
 import Main from '../components/Main.vue'
 
@@ -27,10 +26,13 @@ export default {
         Product,
         Main
     },
+    props: {
+        id: ''
+    },
     data() {
         return {
             products: {},
-            cateId: this.$route.params.id ?? ''
+            cateId: ''
         }
     },
     computed: {
@@ -39,7 +41,8 @@ export default {
         }
     },
     methods: {
-        fetchProduct() {
+        fetchProduct(id) {
+            this.cateId = id ?? this.$route.query.id
             this.$store.dispatch('product/fetchProduct', this.cateId)
             .then(response => {
                 this.products = response

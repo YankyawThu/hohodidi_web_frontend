@@ -1,6 +1,10 @@
 <template>
     <section>
-        <Header name="Product Detail" />
+        <Header name="Product Detail">
+            <template #rightNav>
+                <font-awesome-icon icon="fa-solid fa-cart-shopping" size="xl" class='' />
+            </template>
+        </Header>
         <div class="product-detail mt-20 mb-10">
             <div class="product-card p-2 m-2 rounded-lg shadow">
                 <div class="p-2 pt-1 font-semibold text-gray-500">
@@ -54,7 +58,7 @@
                     <span class=''></span>
                 </span>
                 <span class="tab relative px-5 py-3 cursor-pointer">
-                    photos
+                    Photos
                     <span class=''></span>
                 </span>
             </div>

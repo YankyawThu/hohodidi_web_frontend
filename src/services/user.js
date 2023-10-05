@@ -1,12 +1,32 @@
 import axios from 'axios'
 
 const user = {
-    async fetch(data) {
-        return await axios.get('/user/user-profile', {
-            headers: {
-                Authorization: `Bearer ${data}` 
+    async fetch() {
+        return await axios.get('/user/user-profile')
+        .then(response => {
+            if (response.data.status) {
+                return response.data.data
             }
         })
+    },
+    async fetchCartList() {
+        return await axios.get('/user/add-to-cart-list')
+        .then(response => {
+            if (response.data.status) {
+                return response.data.data
+            }
+        })
+    },
+    async addToCart(data) {
+        return await axios.post('/user/add-to-cart-store', data)
+        .then(response => {
+            if (response.data.status) {
+                return response.data.data
+            }
+        })
+    },
+    async rmItemFromCart(data) {
+        return await axios.post('/user/add-to-cart-delete', data)
         .then(response => {
             if (response.data.status) {
                 return response.data.data

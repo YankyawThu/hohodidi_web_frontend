@@ -8,9 +8,9 @@ const category = {
     actions: {
         fetch({ commit }) {
             return CategoryService.fetch().then(
-                data => {
-                    commit('setCategories', data)
-                    return Promise.resolve(data)
+                response => {
+                    commit('setCategories', response)
+                    return Promise.resolve(response)
                 },
                 error => {
                     return Promise.reject(error)

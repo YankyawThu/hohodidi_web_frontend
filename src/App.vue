@@ -16,6 +16,22 @@ import { RouterView } from 'vue-router'
 export default {
   components: {
     RouterView
+  },
+  methods: {
+    fetchCategory() {
+        this.$store.dispatch('category/fetch')
+    },
+    fetchUserInfo() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      if(user && user.token) {
+        this.$store.dispatch('user/fetch')
+        this.$store.dispatch('user/fetchCartList')
+      }
+    }
+  },
+  mounted() {
+    this.fetchCategory()
+    this.fetchUserInfo()
   }
 }
 </script>

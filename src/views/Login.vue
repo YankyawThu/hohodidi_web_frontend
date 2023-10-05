@@ -34,10 +34,9 @@ export default {
         handleLogin() {
             this.$store.dispatch("auth/login", this.login)
             .then(response => {
+                console.log(response)
                 this.$store.commit('user/setUser', response)
-                this.$router.push({
-                    name: 'home'
-                })
+                window.location.href = "http://localhost:5173/"
             })
         }
     }

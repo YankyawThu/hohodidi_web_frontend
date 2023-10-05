@@ -6,14 +6,12 @@
                     <font-awesome-icon icon="fa-solid fa-caret-left" size="xl" />
                 </router-link>
             </div>
-            <div class="label self-center">
+            <div class="label self-center py-3">
                 {{ name }}
             </div>
         </div>
-        <div class=''>
-            <div class="p-3">
-                <font-awesome-icon icon="fa-solid fa-cart-shopping" size="xl" class='' />
-            </div>
+        <div class="p-3">
+            <slot name='rightNav' />
         </div>
     </div>
 </template>

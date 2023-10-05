@@ -52,14 +52,10 @@ export default {
             .then(response => {
                 this.hotDeals = response
             })
-        },
-        fetchCategory() {
-            this.$store.dispatch('category/fetch')
         }
     },
     mounted() {
         this.fetchHotDeals()
-        this.fetchCategory()
     }
 }
 </script>
