@@ -179,7 +179,6 @@ export default {
                     checkOutInfo.products[index] = cartItem
                 })
             })
-            console.log(checkOutInfo)
             this.$store.dispatch('user/checkout', checkOutInfo)
             .then(response => {
                 console.log(response)
