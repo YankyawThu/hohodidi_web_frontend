@@ -36,7 +36,8 @@ export default {
             .then(response => {
                 console.log(response)
                 this.$store.commit('user/setUser', response)
-                window.location.href = "http://localhost:5173/"
+                // window.location.href = "http://localhost:5173"
+                window.location.href = "https://dev-web.hohodidi.com"
             })
         }
     }
