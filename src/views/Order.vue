@@ -1,7 +1,7 @@
 <template>
     <Header name="Check Out">
     </Header>
-    <div class="mt-16 mb-10 p-2">
+    <div class="mt-16 mb-24 p-2">
         <div v-for="(item,index) in data" :key="index" class="mb-2 rounded-lg border-[1px] border-[#ff6e66]">
             <div class="p-2 bg-[#f7c9c7] rounded-t-md">
                 <div class="font-semibold">{{ item.name }}</div>
@@ -52,27 +52,41 @@
                 <div class="col-span-2 text-left">
                     Sub Total
                 </div>
-                {{item[index]}}
                 <div class="text-right">
-                    <!-- {{ (item[index].cartItem.price - item[index].cartItem.discountPrice)*item[index].cartItem.quantity }} MMK -->
+                    {{ priceEachShop[index] }} Ks
                 </div>
                 <div>
                     Apply Point
                 </div>
                 <div class="mx-auto">
-                    <input v-model="point" type="number" class="px-1 rounded outline-none bg-[#fce2e1] w-24 text-black">
+                    <input v-model="point[index]" type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="px-1 rounded outline-none bg-[#fce2e1] w-24 text-black">
                 </div>
                 <div class="text-right">
-                    {{ point }} MMK
+                    {{ point[index] }} Ks
                 </div>
                 <div></div>
                 <div class="text-center">
                     Total Amount
                 </div>
                 <div class="text-right border-t border-dashed border-white">
-                    <!-- {{ item[index].cartItem.price - item[index].cartItem.discountPrice - point }} MMK -->
+                    {{ totalEachShop[index] }} Ks
                 </div>
             </div>
+        </div>
+    </div>
+    <div class='footer fixed sm:w-96 w-full text-center bottom-0 bg-white z-10 px-5 py-2'>
+        <div class="flex justify-between py-2 mb-2">
+            <div>
+                <span class="text-gray-400">Net Amount</span>
+                <span class="text-[#ff6e66] ml-2">{{ netAmount }} Ks</span>
+            </div>
+            <div class="flex-inline">
+                <span class="text-black">{{ user.point }}</span>
+                <font-awesome-icon icon="fa-solid fa-coins" class="text-yellow-500 ml-3" size="lg" />
+            </div>
+        </div>
+        <div class="text-center bg-[#ff6e66] p-2 text-white rounded" @click="checkOut()">
+            Check Out
         </div>
     </div>
 </template>
@@ -88,7 +102,28 @@ export default {
         return {
             data: [],
             url: import.meta.env.VITE_API_URL,
-            point: 0
+            point: [],
+            priceEachShop: [],
+            totalEachShop: [],
+            netAmount: 0
+        }
+    },
+    watch: {
+        point: {
+            handler(value) {
+                let amount = 0
+                value.forEach((val, index) => {
+                    this.totalEachShop[index] = this.priceEachShop[index] - val
+                    amount += this.totalEachShop[index]
+                    this.netAmount = amount
+                })
+            },
+            deep: true
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.getters['user/getUser']
         }
     },
     methods: {
@@ -96,10 +131,20 @@ export default {
             this.$store.dispatch('user/fetchCartList')
             .then(response => {
                 this.data = response
+                let amount = 0
+                this.data.forEach((shop, index) => {
+                    this.priceEachShop[index] = shop.addToCartList.reduce((price,item) => {
+                        this.point[index] = 0
+                        return price + item.totalPrice
+                    }, 0)
+                    this.totalEachShop[index] = this.priceEachShop[index]
+                    amount += this.totalEachShop[index]
+                    this.netAmount = amount
+                })
             })
         },
         addToCart(type, item) {
-            if(type = 'reduce' && item.quantity <= 1) {
+            if(type == 'reduce' && item.quantity <= 1) {
                 this.rmItemFromCart(item.id)
             }
             this.$store.dispatch('user/addToCart', {
@@ -115,6 +160,29 @@ export default {
             this.$store.dispatch('user/rmItemFromCart', {id: id})
             .then(() => {
                 this.fetchCartList()
+            })
+        },
+        checkOut() {
+            let checkOutInfo = {shops: [], products: []}
+            checkOutInfo.name = this.user.name
+            checkOutInfo.phone = this.user.phone
+            checkOutInfo.address = this.user.address
+            checkOutInfo.type = 'transfer'
+            this.data.forEach((shop, index) => {
+                let cartItem = {}
+                checkOutInfo.shops[index] = {
+                    shopId: shop.id,
+                    usedPoint: this.point[index]
+                }
+                shop.addToCartList.map(item => {
+                    cartItem.addToCartId = item.id
+                    checkOutInfo.products[index] = cartItem
+                })
+            })
+            console.log(checkOutInfo)
+            this.$store.dispatch('user/checkout', checkOutInfo)
+            .then(response => {
+                console.log(response)
             })
         }
     },

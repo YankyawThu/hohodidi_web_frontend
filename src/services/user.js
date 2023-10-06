@@ -33,6 +33,14 @@ const user = {
             }
         })
     },
+    async checkout(data) {
+        return await axios.post('/user/ordering-product-by-point', data)
+        .then(response => {
+            if (response.data.status) {
+                return response.data.data
+            }
+        })
+    },
     async update(user) {
         return await axios.post('/user/user-update', {
             type : "data",

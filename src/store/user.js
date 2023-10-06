@@ -62,7 +62,20 @@ const user = {
                 )
             }
             else router.push({name: 'login'})
-        }
+        },
+        checkout({ commit, state }, data) {
+            if(state.user) {
+                return UserService.checkout(data).then(
+                    response => {
+                        return Promise.resolve(response)
+                    },
+                    error => {
+                        return Promise.reject(error)
+                    }
+                )
+            }
+            else router.push({name: 'login'})
+        },
     },
     mutations: {
         setUser(state, data) {
